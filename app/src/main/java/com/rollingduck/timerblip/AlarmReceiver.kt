@@ -21,15 +21,15 @@ class AlarmReceiver : BroadcastReceiver() {
             return
         }
 
-        var vibrator = context.getSystemService<Vibrator>()
+        val vibrator = context.getSystemService<Vibrator>()
 
         if (vibrator == null) {
             Log.e("VibrateWorker", "Cannot get vibrator")
             return
         }
 
-        var effect = VibrationEffect.createOneShot(1000, 2)
-        vibrator?.vibrate(effect)
+        val effect = VibrationEffect.createOneShot(1000, 2)
+        vibrator.vibrate(effect)
         Log.d("AlarmReceiver", "Vibration!")
 
         AlarmController.setAlarm(context)
