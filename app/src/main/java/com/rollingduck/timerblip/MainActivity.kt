@@ -17,20 +17,20 @@ class MainActivity : Activity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.cancelButton.setOnClickListener(View.OnClickListener {
+        binding.cancelButton.setOnClickListener {
             AlarmController.cancelAlarm(this)
             updateUI()
-        })
+        }
 
-        binding.setButton.setOnClickListener(View.OnClickListener {
+        binding.setButton.setOnClickListener {
             setAlarm()
             updateUI()
-        })
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        updateUI();
+        updateUI()
     }
 
     private fun updateUI() {
