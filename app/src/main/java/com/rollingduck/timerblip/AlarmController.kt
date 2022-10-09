@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import androidx.core.content.getSystemService
 import java.util.*
 import kotlin.math.floor
 
@@ -27,7 +28,8 @@ object AlarmController {
 
         Log.d("AlarmController", "Setting alarm")
 
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        val alarmManager = context.getSystemService<AlarmManager>()
 
         val intent = Intent(context, AlarmReceiver::class.java)
 
@@ -41,7 +43,7 @@ object AlarmController {
         val cal = getNextStartTime()
         Log.d("AlarmController", "Next alarm: ${cal.time}")
 
-        alarmManager.setExact(
+        alarmManager?.setExact(
             AlarmManager.RTC_WAKEUP,
             cal.timeInMillis,
             pendingIntent
@@ -51,8 +53,8 @@ object AlarmController {
     fun cancelAlarm(context: Context) {
         pendingIntent?.let {
             Log.d("AlarmController", "Cancelling alarm")
-            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            alarmManager.cancel(it)
+            val alarmManager = context.getSystemService<AlarmManager>()
+            alarmManager?.cancel(it)
         }
         pendingIntent = null
     }
