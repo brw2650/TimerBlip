@@ -30,11 +30,13 @@ object AlarmController {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         val intent = Intent(context, AlarmReceiver::class.java)
-//        intent.action = MyIntentService.ACTION_SEND_TEST_MESSAGE
-//        intent.putExtra(MyIntentService.EXTRA_MESSAGE, message)
 
-        pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
-//        alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent)
+        pendingIntent = PendingIntent.getBroadcast(
+            context,
+            0,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE
+        )
 
         val cal = getNextStartTime()
         Log.d("AlarmController", "Next alarm: ${cal.time}")
@@ -57,8 +59,8 @@ object AlarmController {
 
     private fun getNextStartTime(): Calendar {
         val cal = Calendar.getInstance()
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
+        cal.set(Calendar.SECOND, 0)
+        cal.set(Calendar.MILLISECOND, 0)
 
         if (cal.get(Calendar.HOUR_OF_DAY) < startTime) {
             cal.set(Calendar.HOUR_OF_DAY, startTime)
@@ -81,6 +83,6 @@ object AlarmController {
             cal.add(Calendar.HOUR, 1)
         }
 
-        return cal;
+        return cal
     }
 }
