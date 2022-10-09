@@ -28,7 +28,7 @@ class AlarmReceiver : BroadcastReceiver() {
             return
         }
 
-        val effect = VibrationEffect.createOneShot(1000, 2)
+        val effect = VibrationEffect.createOneShot(5000, 9)
         vibrator.vibrate(effect)
         Log.d("AlarmReceiver", "Vibration!")
 
