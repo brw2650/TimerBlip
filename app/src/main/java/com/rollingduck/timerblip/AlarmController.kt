@@ -28,7 +28,6 @@ object AlarmController {
 
         Log.d("AlarmController", "Setting alarm")
 
-
         val alarmManager = context.getSystemService<AlarmManager>()
 
         if (alarmManager == null) {
