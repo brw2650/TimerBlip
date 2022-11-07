@@ -10,6 +10,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.getSystemService
+import java.util.*
 
 class AlarmReceiver : BroadcastReceiver() {
 
@@ -47,11 +48,12 @@ class AlarmReceiver : BroadcastReceiver() {
 
     private fun createNotification(context: Context) {
         val notificationId = 123
+        val now = Calendar.getInstance()
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle("Chime")
-            .setContentText("BOOP")
+            .setContentText("It's ${now.time}")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setTimeoutAfter(5000)
             .setCategory(Notification.CATEGORY_ALARM)
