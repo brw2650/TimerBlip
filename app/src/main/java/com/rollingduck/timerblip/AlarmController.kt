@@ -28,8 +28,12 @@ object AlarmController {
 
         Log.d("AlarmController", "Setting alarm")
 
-
         val alarmManager = context.getSystemService<AlarmManager>()
+
+        if (alarmManager == null) {
+            Log.e("AlarmController", "No alarm manager")
+            return
+        }
 
         val intent = Intent(context, AlarmReceiver::class.java)
 
@@ -43,7 +47,7 @@ object AlarmController {
         val cal = getNextStartTime()
         Log.d("AlarmController", "Next alarm: ${cal.time}")
 
-        alarmManager?.setExact(
+        alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
             cal.timeInMillis,
             pendingIntent
