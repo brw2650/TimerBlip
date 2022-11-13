@@ -14,7 +14,7 @@ import java.util.*
 
 class AlarmReceiver : BroadcastReceiver() {
 
-    private final val CHANNEL_ID = "notificationChannel"
+    private val channelId = "notificationChannel"
 
     override fun onReceive(context: Context?, intent: Intent?) {
         Log.d("AlarmReceiver", "Alarm triggered")
@@ -38,7 +38,7 @@ class AlarmReceiver : BroadcastReceiver() {
         val name = "TimerBlip"
         val descriptionText = "NotificationChannel"
         val importance = NotificationManager.IMPORTANCE_DEFAULT
-        val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+        val channel = NotificationChannel(channelId, name, importance).apply {
             description = descriptionText
         }
         // Register the channel with the system
@@ -50,7 +50,7 @@ class AlarmReceiver : BroadcastReceiver() {
         val notificationId = 123
         val now = Calendar.getInstance()
 
-        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+        val builder = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle("Chime")
             .setContentText("It's ${now.time}")

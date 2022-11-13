@@ -6,14 +6,14 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.core.content.getSystemService
+import com.rollingduck.timerblip.SettingsManager.END_TIME
+import com.rollingduck.timerblip.SettingsManager.START_TIME
 import java.util.*
 import kotlin.math.floor
 
 object AlarmController {
 
     private var pendingIntent: PendingIntent? = null
-    private const val startTime = 8
-    private const val endTime = 22
 
     fun isAlarmSet(): Boolean {
         return pendingIntent != null
@@ -44,7 +44,10 @@ object AlarmController {
             PendingIntent.FLAG_IMMUTABLE
         )
 
-        val cal = getNextStartTime()
+        val startTime = SettingsManager.getSetting(context, START_TIME, 8)
+        val endTime = SettingsManager.getSetting(context, END_TIME, 22)
+
+        val cal = getNextStartTime(startTime, endTime)
         Log.d("AlarmController", "Next alarm: ${cal.time}")
 
         alarmManager.setExactAndAllowWhileIdle(
@@ -63,7 +66,8 @@ object AlarmController {
         pendingIntent = null
     }
 
-    private fun getNextStartTime(): Calendar {
+    private fun getNextStartTime(startTime: Int, endTime: Int): Calendar {
+
         val cal = Calendar.getInstance()
         cal.set(Calendar.SECOND, 0)
         cal.set(Calendar.MILLISECOND, 0)
