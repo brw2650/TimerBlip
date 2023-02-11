@@ -33,6 +33,10 @@ class SettingsFragment : Fragment() {
         binding.buttonHome.setOnClickListener {
             findNavController().navigate(R.id.action_SettingsFragment_to_HomeFragment)
         }
+
+        binding.buttonSetTime.setOnClickListener {
+            findNavController().navigate(R.id.action_SettingsFragment_to_StartTimeFragment)
+        }
     }
 
     override fun onResume() {
