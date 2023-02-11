@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.rollingduck.timerblip.databinding.FragmentStartTimeBinding
+import com.rollingduck.timerblip.databinding.FragmentEndTimeBinding
 
-class StartTimeFragment : Fragment() {
+class EndTimeFragment : Fragment() {
 
-    private var _binding: FragmentStartTimeBinding? = null
+    private var _binding: FragmentEndTimeBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -21,24 +22,23 @@ class StartTimeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentStartTimeBinding.inflate(inflater, container, false)
+        _binding = FragmentEndTimeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        this.updateUI()
-
         binding.buttonNext.setOnClickListener {
             this.context?.let {
                 SettingsManager.saveSetting(
                     it,
-                    SettingsManager.START_TIME,
+                    SettingsManager.END_TIME,
                     binding.timePicker.hour
                 )
             }
-            findNavController().navigate(R.id.action_StartTimeFragment_to_EndTimeFragment)
+            Toast.makeText(this.context, "Saved", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_EndTimeFragment_to_SettingsFragment)
         }
     }
 
@@ -50,8 +50,8 @@ class StartTimeFragment : Fragment() {
 
     private fun updateUI() {
         this.context?.let {
-            val startTime = SettingsManager.getSetting(it, SettingsManager.START_TIME, 8)
-            binding.timePicker.hour = startTime
+            val endTime = SettingsManager.getSetting(it, SettingsManager.END_TIME, 22)
+            binding.timePicker.hour = endTime
         }
     }
 

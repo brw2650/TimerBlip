@@ -35,7 +35,17 @@
         tools:layout="@layout/fragment_start_time">
 
         <action
-            android:id="@+id/action_StartTimeFragment_to_SettingsFragment"
+            android:id="@+id/action_StartTimeFragment_to_EndTimeFragment"
+            app:destination="@id/EndTimeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/EndTimeFragment"
+        android:name="com.rollingduck.timerblip.EndTimeFragment"
+        android:label="@string/end_time_fragment_label"
+        tools:layout="@layout/fragment_end_time">
+
+        <action
+            android:id="@+id/action_EndTimeFragment_to_SettingsFragment"
             app:destination="@id/SettingsFragment" />
     </fragment>
 </navigation>
