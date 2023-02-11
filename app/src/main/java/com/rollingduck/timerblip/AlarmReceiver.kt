@@ -1,12 +1,15 @@
 package com.rollingduck.timerblip
 
+import android.Manifest
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.util.Log
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.getSystemService
@@ -47,6 +50,15 @@ class AlarmReceiver : BroadcastReceiver() {
     }
 
     private fun createNotification(context: Context) {
+        if (ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            Log.d("AlarmReceiver", "No notification permission granted")
+            return
+        }
+
         val notificationId = 123
         val now = Calendar.getInstance()
 
