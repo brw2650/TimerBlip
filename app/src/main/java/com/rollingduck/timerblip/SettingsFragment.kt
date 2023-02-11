@@ -28,10 +28,20 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        this.updateUI()
+
         binding.buttonHome.setOnClickListener {
             findNavController().navigate(R.id.action_SettingsFragment_to_HomeFragment)
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
+
+        this.updateUI()
+    }
+
+    private fun updateUI() {
         val startTime =
             this.context?.let { SettingsManager.getSetting(it, SettingsManager.START_TIME, 8) };
         val endTime =
