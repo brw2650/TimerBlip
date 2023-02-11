@@ -31,6 +31,14 @@ class SettingsFragment : Fragment() {
         binding.buttonHome.setOnClickListener {
             findNavController().navigate(R.id.action_SettingsFragment_to_HomeFragment)
         }
+
+        val startTime =
+            this.context?.let { SettingsManager.getSetting(it, SettingsManager.START_TIME, 8) };
+        val endTime =
+            this.context?.let { SettingsManager.getSetting(it, SettingsManager.END_TIME, 22) };
+        binding.startTimeDisplay.text =
+            String.format(getString(R.string.start_time_display), startTime);
+        binding.endTimeDisplay.text = String.format(getString(R.string.end_time_display), endTime);
     }
 
     override fun onDestroyView() {
