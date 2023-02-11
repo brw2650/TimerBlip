@@ -1,18 +1,15 @@
 package com.rollingduck.timerblip
 
 import android.Manifest
-import android.app.Activity
-import android.content.ComponentName
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.FragmentActivity
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
 import com.rollingduck.timerblip.databinding.ActivityMainBinding
 
 class MainActivity : FragmentActivity() {
