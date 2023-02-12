@@ -19,9 +19,9 @@
     <string name="home">Home</string>
     <string name="next">Next</string>
 
-    <string name="start_time_display">Start time: %1$s</string>
+    <string name="start_time_display">Start time: %1tT</string>
     <string name="start_time">Start time</string>
-    <string name="end_time_display">End time: %1$s</string>
+    <string name="end_time_display">End time: %1tT</string>
     <string name="end_time">End time</string>
     <string name="set_times">Set times</string>
 </resources>

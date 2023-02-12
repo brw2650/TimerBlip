@@ -36,6 +36,11 @@ class EndTimeFragment : Fragment() {
                     SettingsManager.END_TIME,
                     binding.timePicker.hour
                 )
+                SettingsManager.saveSetting(
+                    it,
+                    SettingsManager.END_TIME_MIN,
+                    binding.timePicker.minute
+                )
             }
             Toast.makeText(this.context, "Saved", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_EndTimeFragment_to_SettingsFragment)
@@ -50,8 +55,18 @@ class EndTimeFragment : Fragment() {
 
     private fun updateUI() {
         this.context?.let {
-            val endTime = SettingsManager.getSetting(it, SettingsManager.END_TIME, 22)
+            val endTime = SettingsManager.getSetting(
+                it,
+                SettingsManager.END_TIME,
+                SettingsManager.DEFAULT_END_TIME
+            )
             binding.timePicker.hour = endTime
+            val endTimeMin = SettingsManager.getSetting(
+                it,
+                SettingsManager.END_TIME_MIN,
+                SettingsManager.DEFAULT_MIN_TIME
+            )
+            binding.timePicker.minute = endTimeMin
         }
     }
 

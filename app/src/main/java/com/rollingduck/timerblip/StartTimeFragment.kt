@@ -37,6 +37,11 @@ class StartTimeFragment : Fragment() {
                     SettingsManager.START_TIME,
                     binding.timePicker.hour
                 )
+                SettingsManager.saveSetting(
+                    it,
+                    SettingsManager.START_TIME_MIN,
+                    binding.timePicker.minute
+                )
             }
             findNavController().navigate(R.id.action_StartTimeFragment_to_EndTimeFragment)
         }
@@ -50,8 +55,18 @@ class StartTimeFragment : Fragment() {
 
     private fun updateUI() {
         this.context?.let {
-            val startTime = SettingsManager.getSetting(it, SettingsManager.START_TIME, 8)
+            val startTime = SettingsManager.getSetting(
+                it,
+                SettingsManager.START_TIME,
+                SettingsManager.DEFAULT_START_TIME
+            )
             binding.timePicker.hour = startTime
+            val startTimeMin = SettingsManager.getSetting(
+                it,
+                SettingsManager.START_TIME_MIN,
+                SettingsManager.DEFAULT_MIN_TIME
+            )
+            binding.timePicker.minute = startTimeMin
         }
     }
 
