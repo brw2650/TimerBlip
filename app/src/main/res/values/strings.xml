@@ -9,7 +9,7 @@
     <string name="next_alarm">Next alarm: %1tT</string>
     <string name="set_alarm">Start</string>
     <string name="cancel_alarm">Stop</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="permission_warning">Notification permission is required for app to function</string>
     <!-- Strings used for fragments for navigation -->
     <string name="home_fragment_label">Home Fragment</string>
     <string name="settings_fragment_label">Settings Fragment</string>

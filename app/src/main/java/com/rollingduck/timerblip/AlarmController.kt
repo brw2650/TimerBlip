@@ -49,6 +49,7 @@ object AlarmController {
         )
 
         val cal = getNextAlarm(context)
+
         Log.d("AlarmController", "Next alarm: ${cal.time}")
 
         alarmManager.setExactAndAllowWhileIdle(
@@ -74,6 +75,7 @@ object AlarmController {
             SettingsManager.getCalSetting(context, END_TIME, DEFAULT_END_TIME, DEFAULT_MIN_TIME)
         val interval =
             SettingsManager.getIntSetting(context, INTERVAL, DEFAULT_INTERVAL)
+
         return getNextStartTime(startTime, endTime, interval)
     }
 

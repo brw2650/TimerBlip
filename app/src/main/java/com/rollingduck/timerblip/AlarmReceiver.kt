@@ -71,6 +71,7 @@ class AlarmReceiver : BroadcastReceiver() {
         with(NotificationManagerCompat.from(context)) {
             notify(notificationId, builder.build())
         }
+
         Log.d("AlarmReceiver", "Vibration!")
     }
 }
