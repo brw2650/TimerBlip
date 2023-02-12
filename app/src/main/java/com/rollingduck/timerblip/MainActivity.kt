@@ -46,6 +46,7 @@ class MainActivity : FragmentActivity() {
                     )
                     .show()
             } else {
+                Log.d("MainActivity", "Requesting notification permission")
                 val permissions = arrayOf(Manifest.permission.POST_NOTIFICATIONS)
                 ActivityCompat.requestPermissions(
                     this,

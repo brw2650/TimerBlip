@@ -32,8 +32,6 @@ class AlarmReceiver : BroadcastReceiver() {
 
         createNotificationChannel(context)
         createNotification(context)
-        Log.d("AlarmReceiver", "Vibration!")
-
         AlarmController.setAlarm(context)
     }
 
@@ -73,5 +71,6 @@ class AlarmReceiver : BroadcastReceiver() {
         with(NotificationManagerCompat.from(context)) {
             notify(notificationId, builder.build())
         }
+        Log.d("AlarmReceiver", "Vibration!")
     }
 }

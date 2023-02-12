@@ -1,12 +1,9 @@
 package com.rollingduck.timerblip
 
 import android.os.Bundle
-import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.rollingduck.timerblip.databinding.FragmentEndTimeBinding
@@ -23,7 +20,7 @@ class EndTimeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentEndTimeBinding.inflate(inflater, container, false)
         return binding.root
@@ -44,19 +41,7 @@ class EndTimeFragment : Fragment() {
                 )
             }
 
-            val toast = Toast.makeText(this.context, "Saved", Toast.LENGTH_SHORT)
-            toast.setGravity(Gravity.BOTTOM, 0, 0)
-            toast.show()
-
-            if (AlarmController.isAlarmSet()) {
-                Log.d("EndTimeFragment", "Resetting alarm to pick up settings change")
-                this.context?.let {
-                    AlarmController.cancelAlarm(it)
-                    AlarmController.setAlarm(it)
-                }
-            }
-
-            findNavController().navigate(R.id.action_EndTimeFragment_to_SettingsFragment)
+            findNavController().navigate(R.id.action_EndTimeFragment_to_IntervalFragment)
         }
     }
 

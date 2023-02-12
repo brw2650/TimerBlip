@@ -62,6 +62,13 @@ class SettingsFragment : Fragment() {
                 SettingsManager.DEFAULT_MIN_TIME
             )
             binding.endTimeDisplay.text = getString(R.string.end_time_display, endTime);
+
+            val interval = SettingsManager.getIntSetting(
+                it,
+                SettingsManager.INTERVAL,
+                SettingsManager.DEFAULT_INTERVAL
+            )
+            binding.intervalDisplay.text = getString(R.string.interval_display, interval)
         }
     }
 

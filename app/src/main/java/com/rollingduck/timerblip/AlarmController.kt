@@ -7,12 +7,13 @@ import android.content.Intent
 import android.util.Log
 import androidx.core.content.getSystemService
 import com.rollingduck.timerblip.SettingsManager.DEFAULT_END_TIME
+import com.rollingduck.timerblip.SettingsManager.DEFAULT_INTERVAL
 import com.rollingduck.timerblip.SettingsManager.DEFAULT_MIN_TIME
 import com.rollingduck.timerblip.SettingsManager.DEFAULT_START_TIME
 import com.rollingduck.timerblip.SettingsManager.END_TIME
+import com.rollingduck.timerblip.SettingsManager.INTERVAL
 import com.rollingduck.timerblip.SettingsManager.START_TIME
 import java.util.*
-import kotlin.math.floor
 
 object AlarmController {
 
@@ -47,12 +48,7 @@ object AlarmController {
             PendingIntent.FLAG_IMMUTABLE
         )
 
-        val startTime =
-            SettingsManager.getCalSetting(context, START_TIME, DEFAULT_START_TIME, DEFAULT_MIN_TIME)
-        val endTime =
-            SettingsManager.getCalSetting(context, END_TIME, DEFAULT_END_TIME, DEFAULT_MIN_TIME)
-
-        val cal = getNextStartTime(startTime, endTime)
+        val cal = getNextAlarm(context)
         Log.d("AlarmController", "Next alarm: ${cal.time}")
 
         alarmManager.setExactAndAllowWhileIdle(
@@ -76,34 +72,30 @@ object AlarmController {
             SettingsManager.getCalSetting(context, START_TIME, DEFAULT_START_TIME, DEFAULT_MIN_TIME)
         val endTime =
             SettingsManager.getCalSetting(context, END_TIME, DEFAULT_END_TIME, DEFAULT_MIN_TIME)
-        return getNextStartTime(startTime, endTime)
+        val interval =
+            SettingsManager.getIntSetting(context, INTERVAL, DEFAULT_INTERVAL)
+        return getNextStartTime(startTime, endTime, interval)
     }
 
-    private fun getNextStartTime(startTime: Calendar, endTime: Calendar): Calendar {
+    private fun getNextStartTime(startTime: Calendar, endTime: Calendar, interval: Int): Calendar {
 
-        var cal = Calendar.getInstance()
-        cal.set(Calendar.SECOND, 0)
-        cal.set(Calendar.MILLISECOND, 0)
+        val now = Calendar.getInstance()
 
-        if (cal < startTime) {
-            cal = startTime.clone() as Calendar
-            return cal
+        if (now < startTime) {
+            return startTime.clone() as Calendar
         }
 
-        if (cal >= endTime) {
-            cal = startTime.clone() as Calendar
-            cal.add(Calendar.DAY_OF_MONTH, 1)
-            return cal
+        val nextStart = startTime.clone() as Calendar
+        while (nextStart < now) {
+            nextStart.add(Calendar.MINUTE, interval)
         }
 
-        val interval = floor((cal.get(Calendar.MINUTE) / 30).toDouble())
-        if (interval.toInt() == 0) {
-            cal.set(Calendar.MINUTE, 30)
-        } else {
-            cal.set(Calendar.MINUTE, 0)
-            cal.add(Calendar.HOUR, 1)
+        if (nextStart > endTime) {
+            val tomorrow = startTime.clone() as Calendar
+            tomorrow.add(Calendar.DAY_OF_MONTH, 1)
+            return tomorrow
         }
 
-        return cal
+        return nextStart
     }
 }

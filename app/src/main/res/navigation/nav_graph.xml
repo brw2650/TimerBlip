@@ -45,7 +45,17 @@
         tools:layout="@layout/fragment_end_time">
 
         <action
-            android:id="@+id/action_EndTimeFragment_to_SettingsFragment"
+            android:id="@+id/action_EndTimeFragment_to_IntervalFragment"
+            app:destination="@id/IntervalFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/IntervalFragment"
+        android:name="com.rollingduck.timerblip.IntervalFragment"
+        android:label="@string/interval_fragment_label"
+        tools:layout="@layout/fragment_interval">
+
+        <action
+            android:id="@+id/action_IntervalFragment_to_SettingsFragment"
             app:destination="@id/SettingsFragment" />
     </fragment>
 </navigation>

@@ -8,10 +8,12 @@ object SettingsManager {
 
     const val START_TIME = "StartTimeHour"
     const val END_TIME = "EndTimeHour"
+    const val INTERVAL = "Interval"
 
     const val DEFAULT_START_TIME = 8
     const val DEFAULT_END_TIME = 22
     const val DEFAULT_MIN_TIME = 0
+    const val DEFAULT_INTERVAL = 30
 
     private const val timerSettings = "TimerSettings"
 
