@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.rollingduck.timerblip.databinding.FragmentSettingsBinding
-import java.util.*
 
 class SettingsFragment : Fragment() {
 
@@ -48,40 +47,22 @@ class SettingsFragment : Fragment() {
 
     private fun updateUI() {
         this.context?.let {
-            val startTime = SettingsManager.getSetting(
+            val startTime = SettingsManager.getCalSetting(
                 it,
                 SettingsManager.START_TIME,
-                SettingsManager.DEFAULT_START_TIME
-            )
-            val startTimeMin = SettingsManager.getSetting(
-                it,
-                SettingsManager.START_TIME_MIN,
+                SettingsManager.DEFAULT_START_TIME,
                 SettingsManager.DEFAULT_MIN_TIME
             )
-            val startDate = this.createTime(startTime, startTimeMin)
-            binding.startTimeDisplay.text = getString(R.string.start_time_display, startDate);
+            binding.startTimeDisplay.text = getString(R.string.start_time_display, startTime);
 
-            val endTime = SettingsManager.getSetting(
+            val endTime = SettingsManager.getCalSetting(
                 it,
                 SettingsManager.END_TIME,
-                SettingsManager.DEFAULT_END_TIME
-            )
-            val endTimeMin = SettingsManager.getSetting(
-                it,
-                SettingsManager.END_TIME_MIN,
+                SettingsManager.DEFAULT_END_TIME,
                 SettingsManager.DEFAULT_MIN_TIME
             )
-            val endDate = this.createTime(endTime, endTimeMin)
-            binding.endTimeDisplay.text = getString(R.string.end_time_display, endDate);
+            binding.endTimeDisplay.text = getString(R.string.end_time_display, endTime);
         }
-    }
-
-    private fun createTime(hour: Int, minute: Int): Date {
-        val cal = Calendar.getInstance()
-        cal.set(Calendar.HOUR_OF_DAY, hour)
-        cal.set(Calendar.MINUTE, minute)
-        cal.set(Calendar.SECOND, 0)
-        return cal.time
     }
 
     override fun onDestroyView() {

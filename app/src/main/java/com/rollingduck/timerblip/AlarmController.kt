@@ -44,8 +44,8 @@ object AlarmController {
             PendingIntent.FLAG_IMMUTABLE
         )
 
-        val startTime = SettingsManager.getSetting(context, START_TIME, 8)
-        val endTime = SettingsManager.getSetting(context, END_TIME, 22)
+        val startTime = SettingsManager.getIntSetting(context, START_TIME, 8)
+        val endTime = SettingsManager.getIntSetting(context, END_TIME, 22)
 
         val cal = getNextStartTime(startTime, endTime)
         Log.d("AlarmController", "Next alarm: ${cal.time}")

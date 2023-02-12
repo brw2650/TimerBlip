@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.rollingduck.timerblip.databinding.FragmentEndTimeBinding
+import java.util.*
 
 class EndTimeFragment : Fragment() {
 
@@ -31,15 +32,13 @@ class EndTimeFragment : Fragment() {
 
         binding.buttonNext.setOnClickListener {
             this.context?.let {
-                SettingsManager.saveSetting(
+                val date = Calendar.getInstance()
+                date.set(Calendar.HOUR_OF_DAY, binding.timePicker.hour)
+                date.set(Calendar.MINUTE, binding.timePicker.minute)
+                SettingsManager.saveCalSetting(
                     it,
                     SettingsManager.END_TIME,
-                    binding.timePicker.hour
-                )
-                SettingsManager.saveSetting(
-                    it,
-                    SettingsManager.END_TIME_MIN,
-                    binding.timePicker.minute
+                    date
                 )
             }
             Toast.makeText(this.context, "Saved", Toast.LENGTH_SHORT).show()
@@ -55,18 +54,14 @@ class EndTimeFragment : Fragment() {
 
     private fun updateUI() {
         this.context?.let {
-            val endTime = SettingsManager.getSetting(
+            val endTime = SettingsManager.getCalSetting(
                 it,
                 SettingsManager.END_TIME,
-                SettingsManager.DEFAULT_END_TIME
-            )
-            binding.timePicker.hour = endTime
-            val endTimeMin = SettingsManager.getSetting(
-                it,
-                SettingsManager.END_TIME_MIN,
+                SettingsManager.DEFAULT_END_TIME,
                 SettingsManager.DEFAULT_MIN_TIME
             )
-            binding.timePicker.minute = endTimeMin
+            binding.timePicker.hour = endTime.get(Calendar.HOUR_OF_DAY)
+            binding.timePicker.minute = endTime.get(Calendar.MINUTE)
         }
     }
 

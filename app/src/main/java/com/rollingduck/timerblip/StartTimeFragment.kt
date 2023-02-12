@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.rollingduck.timerblip.databinding.FragmentStartTimeBinding
+import java.util.*
 
 class StartTimeFragment : Fragment() {
 
@@ -32,15 +33,13 @@ class StartTimeFragment : Fragment() {
 
         binding.buttonNext.setOnClickListener {
             this.context?.let {
-                SettingsManager.saveSetting(
+                val date = Calendar.getInstance()
+                date.set(Calendar.HOUR_OF_DAY, binding.timePicker.hour)
+                date.set(Calendar.MINUTE, binding.timePicker.minute)
+                SettingsManager.saveCalSetting(
                     it,
                     SettingsManager.START_TIME,
-                    binding.timePicker.hour
-                )
-                SettingsManager.saveSetting(
-                    it,
-                    SettingsManager.START_TIME_MIN,
-                    binding.timePicker.minute
+                    date
                 )
             }
             findNavController().navigate(R.id.action_StartTimeFragment_to_EndTimeFragment)
@@ -55,18 +54,14 @@ class StartTimeFragment : Fragment() {
 
     private fun updateUI() {
         this.context?.let {
-            val startTime = SettingsManager.getSetting(
+            val startTime = SettingsManager.getCalSetting(
                 it,
                 SettingsManager.START_TIME,
-                SettingsManager.DEFAULT_START_TIME
-            )
-            binding.timePicker.hour = startTime
-            val startTimeMin = SettingsManager.getSetting(
-                it,
-                SettingsManager.START_TIME_MIN,
+                SettingsManager.DEFAULT_END_TIME,
                 SettingsManager.DEFAULT_MIN_TIME
             )
-            binding.timePicker.minute = startTimeMin
+            binding.timePicker.hour = startTime.get(Calendar.HOUR_OF_DAY)
+            binding.timePicker.minute = startTime.get(Calendar.MINUTE)
         }
     }
 
