@@ -6,6 +6,7 @@
     -->
     <string name="alarm_set">Alarm Set</string>
     <string name="alarm_not_set">No Alarm Set</string>
+    <string name="next_alarm">Next alarm: %1tT</string>
     <string name="set_alarm">Start</string>
     <string name="cancel_alarm">Stop</string>
     <string name="title_activity_settings">SettingsActivity</string>

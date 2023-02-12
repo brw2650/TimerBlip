@@ -47,12 +47,18 @@ class HomeFragment : Fragment() {
             if (AlarmController.isAlarmSet()) getString(R.string.alarm_set) else getString(R.string.alarm_not_set)
         binding.buttonToggleAlarm.text =
             if (AlarmController.isAlarmSet()) getString(R.string.cancel_alarm) else getString(R.string.set_alarm)
+        binding.textNextAlarm.visibility =
+            if (AlarmController.isAlarmSet()) View.VISIBLE else View.INVISIBLE
+
+        this.context?.let {
+            val nextAlarm = AlarmController.getNextAlarm(it)
+            binding.textNextAlarm.text = getString(R.string.next_alarm, nextAlarm)
+        }
     }
 
     private fun toggleAlarm() {
         val context = this.requireContext()
         if (AlarmController.isAlarmSet()) {
-            // Cancel
             AlarmController.cancelAlarm(context)
         } else {
             setAlarm(context)

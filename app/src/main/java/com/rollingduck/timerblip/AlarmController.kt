@@ -6,6 +6,9 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.core.content.getSystemService
+import com.rollingduck.timerblip.SettingsManager.DEFAULT_END_TIME
+import com.rollingduck.timerblip.SettingsManager.DEFAULT_MIN_TIME
+import com.rollingduck.timerblip.SettingsManager.DEFAULT_START_TIME
 import com.rollingduck.timerblip.SettingsManager.END_TIME
 import com.rollingduck.timerblip.SettingsManager.START_TIME
 import java.util.*
@@ -44,8 +47,10 @@ object AlarmController {
             PendingIntent.FLAG_IMMUTABLE
         )
 
-        val startTime = SettingsManager.getIntSetting(context, START_TIME, 8)
-        val endTime = SettingsManager.getIntSetting(context, END_TIME, 22)
+        val startTime =
+            SettingsManager.getCalSetting(context, START_TIME, DEFAULT_START_TIME, DEFAULT_MIN_TIME)
+        val endTime =
+            SettingsManager.getCalSetting(context, END_TIME, DEFAULT_END_TIME, DEFAULT_MIN_TIME)
 
         val cal = getNextStartTime(startTime, endTime)
         Log.d("AlarmController", "Next alarm: ${cal.time}")
@@ -66,22 +71,28 @@ object AlarmController {
         pendingIntent = null
     }
 
-    private fun getNextStartTime(startTime: Int, endTime: Int): Calendar {
+    fun getNextAlarm(context: Context): Calendar {
+        val startTime =
+            SettingsManager.getCalSetting(context, START_TIME, DEFAULT_START_TIME, DEFAULT_MIN_TIME)
+        val endTime =
+            SettingsManager.getCalSetting(context, END_TIME, DEFAULT_END_TIME, DEFAULT_MIN_TIME)
+        return getNextStartTime(startTime, endTime)
+    }
 
-        val cal = Calendar.getInstance()
+    private fun getNextStartTime(startTime: Calendar, endTime: Calendar): Calendar {
+
+        var cal = Calendar.getInstance()
         cal.set(Calendar.SECOND, 0)
         cal.set(Calendar.MILLISECOND, 0)
 
-        if (cal.get(Calendar.HOUR_OF_DAY) < startTime) {
-            cal.set(Calendar.HOUR_OF_DAY, startTime)
-            cal.set(Calendar.MINUTE, 0)
+        if (cal < startTime) {
+            cal = startTime.clone() as Calendar
             return cal
         }
 
-        if (cal.get(Calendar.HOUR_OF_DAY) >= endTime) {
-            cal.set(Calendar.HOUR_OF_DAY, startTime)
+        if (cal >= endTime) {
+            cal = startTime.clone() as Calendar
             cal.add(Calendar.DAY_OF_MONTH, 1)
-            cal.set(Calendar.MINUTE, 0)
             return cal
         }
 
