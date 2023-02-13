@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/HomeFragment">
+
+    <fragment
+        android:id="@+id/HomeFragment"
+        android:name="com.rollingduck.timerblip.HomeFragment"
+        android:label="@string/home_fragment_label"
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/action_HomeFragment_to_SettingsFragment"
+            app:destination="@id/SettingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/SettingsFragment"
+        android:name="com.rollingduck.timerblip.SettingsFragment"
+        android:label="@string/settings_fragment_label"
+        tools:layout="@layout/fragment_settings">
+
+        <action
+            android:id="@+id/action_SettingsFragment_to_HomeFragment"
+            app:destination="@id/HomeFragment" />
+        <action
+            android:id="@+id/action_SettingsFragment_to_StartTimeFragment"
+            app:destination="@id/StartTimeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/StartTimeFragment"
+        android:name="com.rollingduck.timerblip.StartTimeFragment"
+        android:label="@string/start_time_fragment_label"
+        tools:layout="@layout/fragment_start_time">
+
+        <action
+            android:id="@+id/action_StartTimeFragment_to_EndTimeFragment"
+            app:destination="@id/EndTimeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/EndTimeFragment"
+        android:name="com.rollingduck.timerblip.EndTimeFragment"
+        android:label="@string/end_time_fragment_label"
+        tools:layout="@layout/fragment_end_time">
+
+        <action
+            android:id="@+id/action_EndTimeFragment_to_IntervalFragment"
+            app:destination="@id/IntervalFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/IntervalFragment"
+        android:name="com.rollingduck.timerblip.IntervalFragment"
+        android:label="@string/interval_fragment_label"
+        tools:layout="@layout/fragment_interval">
+
+        <action
+            android:id="@+id/action_IntervalFragment_to_SettingsFragment"
+            app:destination="@id/SettingsFragment" />
+    </fragment>
+</navigation>

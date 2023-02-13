@@ -1,20 +1,19 @@
 package com.rollingduck.timerblip
 
 import android.Manifest
-import android.app.Activity
-import android.content.ComponentName
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
 import com.rollingduck.timerblip.databinding.ActivityMainBinding
 
-class MainActivity : Activity() {
+class MainActivity : FragmentActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -23,19 +22,20 @@ class MainActivity : Activity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+    }
 
-        binding.cancelButton.setOnClickListener {
-            AlarmController.cancelAlarm(this)
-            updateUI()
-        }
-
-        binding.setButton.setOnClickListener {
-            setAlarm()
-            updateUI()
-        }
+    override fun onStart() {
+        super.onStart()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             showNotificationPermission()
+        } else {
+            with(NotificationManagerCompat.from(this)) {
+                val notificationsEnabled = areNotificationsEnabled()
+                if (!notificationsEnabled) {
+                    showNotificationWarning()
+                }
+            }
         }
     }
 
@@ -50,19 +50,14 @@ class MainActivity : Activity() {
                     Manifest.permission.POST_NOTIFICATIONS
                 )
             ) {
-                Toast
-                    .makeText(
-                        this,
-                        "Notification permission required for app to work",
-                        Toast.LENGTH_LONG
-                    )
-                    .show()
+                showNotificationWarning()
             } else {
+                Log.d("MainActivity", "Requesting notification permission")
                 val permissions = arrayOf(Manifest.permission.POST_NOTIFICATIONS)
                 ActivityCompat.requestPermissions(
                     this,
                     permissions,
-                    1
+                    0
                 )
             }
         } else {
@@ -70,34 +65,17 @@ class MainActivity : Activity() {
         }
     }
 
+    private fun showNotificationWarning() {
+        Toast
+            .makeText(
+                this,
+                getString(R.string.permission_warning),
+                Toast.LENGTH_LONG
+            )
+            .show()
+    }
+
     override fun onResume() {
         super.onResume()
-        updateUI()
-    }
-
-    private fun updateUI() {
-        if (AlarmController.isAlarmSet()) {
-            binding.alarmSet.visibility = View.VISIBLE
-            binding.alarmNotSet.visibility = View.INVISIBLE
-            binding.cancelButton.visibility = View.VISIBLE
-            binding.setButton.visibility = View.INVISIBLE
-        } else {
-            binding.alarmSet.visibility = View.INVISIBLE
-            binding.alarmNotSet.visibility = View.VISIBLE
-            binding.cancelButton.visibility = View.INVISIBLE
-            binding.setButton.visibility = View.VISIBLE
-        }
-    }
-
-    private fun setAlarm() {
-        AlarmController.setAlarm(this)
-
-        val receiver = ComponentName(this, BootReceiver::class.java)
-
-        this.packageManager.setComponentEnabledSetting(
-            receiver,
-            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-            PackageManager.DONT_KILL_APP
-        )
     }
 }
