@@ -57,7 +57,7 @@ class StartTimeFragment : Fragment() {
             val startTime = SettingsManager.getCalSetting(
                 it,
                 SettingsManager.START_TIME,
-                SettingsManager.DEFAULT_END_TIME,
+                SettingsManager.DEFAULT_START_TIME,
                 SettingsManager.DEFAULT_MIN_TIME
             )
             binding.timePicker.hour = startTime.get(Calendar.HOUR_OF_DAY)

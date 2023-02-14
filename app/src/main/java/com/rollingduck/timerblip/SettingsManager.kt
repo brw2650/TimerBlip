@@ -55,6 +55,7 @@ object SettingsManager {
         cal.set(Calendar.HOUR_OF_DAY, hour)
         cal.set(Calendar.MINUTE, minute)
         cal.set(Calendar.SECOND, 0)
+        cal.set(Calendar.MILLISECOND, 0)
         return cal
     }
 }
